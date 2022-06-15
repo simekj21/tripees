@@ -208,14 +208,7 @@
             SUMA
             <hr><br>
         </summary>
-        <svg height="100" width="100" viewBox="0 0 20 20">
-          <circle r="10" cx="10" cy="10" fill="white" />
-          <circle r="5" cx="10" cy="10" fill="bisque"
-                  stroke="tomato"
-                  stroke-width="10"
-                  stroke-dasharray="calc(35 * 31.42 / 100) 31.42" />
-        </svg>
-        <br>
+        
         <total-costs>
 
           {{ sumaOfCosts }} € &#8718;
