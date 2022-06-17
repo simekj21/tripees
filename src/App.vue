@@ -548,25 +548,22 @@ export default {
         costs: [],
     }
 
-    if (localStorage.getItem(this.nameOfTrip)) {
-      this.trip = JSON.parse(localStorage.getItem(this.nameOfTrip))
-      
-      this.members = [...this.trip.config.members]
-      
-      this.currency = this.currencies.filter(
-        currency => currency.name === this.trip.config.currencyName
-      )[0]
-
-      console.log('currency:', this.currency.rate)
-
-      this.costs = [...this.trip.costs]
-
-    } else {
+    if (!localStorage.getItem(this.nameOfTrip)) {
       localStorage.setItem(this.nameOfTrip, JSON.stringify(this.trip))
-
-      this.members = [...this.trip.config.members]
+    } 
       
-    }
+    this.trip = JSON.parse(localStorage.getItem(this.nameOfTrip))
+    
+    this.members = [...this.trip.config.members]
+    
+    this.currency = this.currencies.filter(
+      currency => currency.name === this.trip.config.currencyName
+    )[0]
+
+    console.log('currency:', this.currency.rate)
+
+    this.costs = [...this.trip.costs]
+  
 
     // old data structure
     // if (localStorage.getItem('costs')) {
