@@ -64,8 +64,11 @@
           colspan="6"
           class="text-red-400 text-right pr-2 text-lg"
         >
-          {{ getSumaByMember(member) }} € &#8718; 
-          {{ Math.round(getSumaByMember(member) * euCz) }} cz 
+          {{ getSumaByMember(member) }} 
+          <span class="font-extralight text-xs">{{ this.currency.name }}&nbsp;</span>&#8718;
+          {{ Math.round(getSumaByMember(member) * this.currency.rate) }} 
+          <span class="font-extralight text-xs">cz</span>
+
 
           <!-- {{ getSuma(costsData.filter(cost => cost.payer === member)) }} € &#8718; 
           {{ Math.round(getSuma(costsData.filter(cost => cost.payer === member)) * euCz) }} cz  -->
@@ -76,8 +79,11 @@
   <h1
     class="p-1 mb-2 w-auto rounded-md text-xl text-red-400 text-right font-bold bg-slate-700"
   >
-    {{ getSuma(costsData) }} € &#8718; 
-    {{ Math.round(getSuma(costsData) * euCz) }} cz
+    {{ getSuma(costsData) }} 
+    <span class="font-extralight text-xs">{{ this.currency.name }}&nbsp;</span>&#8718;
+    {{ Math.round(getSuma(costsData) * this.currency.rate) }}
+    <span class="font-extralight text-xs">cz</span>
+     
   </h1>
 
   <!-- <hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr> -->
@@ -149,6 +155,8 @@ export default {
     euCz: Number,
     members: Array,
     costsData: Array,
+    currencyRate: Number,
+    currency: Object,
   },
   data () {
     return {
