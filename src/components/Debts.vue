@@ -18,9 +18,12 @@
       v-for="(debt, index) in viewOfDebts" :key="index"
       class=""
     >
+
+      <span class="font-extralight text-xs">{{ this.currency.name }}</span>
+
       <td class="px-2">{{debt.debtor}} &#8594; {{debt.payer}}</td>
-      <td >{{debt.amount}} €</td>
-      <td class="pr-2 text-right">{{Math.round(debt.amount * euCz)}} czk</td>
+      <td>{{ debt.amount }}<span class="font-extralight text-xs">&nbsp;{{ currency.name }}</span></td>
+      <td class="pr-2 text-right">{{Math.round(debt.amount * currency.rate)}} <span class="font-extralight text-xs">cz</span></td>
     </tr>
   </table>
 <!-- </div> -->
@@ -34,6 +37,7 @@ export default {
     lengthOfCosts: Number,
     members: Array,
     euCz: Number,
+    currency: Object,
   },
   data () {
     return {

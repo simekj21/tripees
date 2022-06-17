@@ -142,6 +142,7 @@
         </summary>
         <costs
           :costs="costs"
+          :currency="currency"
           @update-costs="updateCosts"
         />
       </details>
@@ -160,6 +161,8 @@
           :euCz="euCz"
           :members="members"
           :costsData="costs"
+          :currency-rate="currency.rate"
+          :currency="currency"
         />
       </details>
       
@@ -177,6 +180,7 @@
           :costs="costs"
           :lengthOfCosts="costs.length"
           :members="members"
+          :currency="currency"
         />
       </details>
           
@@ -196,6 +200,7 @@
           :lengthOfCosts="costs.length"
           :typesOfCost="typesOfCost"
           :sumaOfCosts="sumaOfCosts"
+          :currency="currency"
         />
       </details>
     
@@ -210,10 +215,9 @@
         </summary>
         
         <total-costs>
-
-          {{ sumaOfCosts }} € &#8718;
-          {{ Math.round(sumaOfCosts * euCz) }} cz &#8718;
-          {{ Math.round((sumaOfCosts / members.length) * euCz) }} cz
+          {{ sumaOfCosts }}&nbsp;{{ currency.name }}&nbsp;&#8718;
+          {{ Math.round(sumaOfCosts * currency.rate) }} cz &#8718;
+          {{ Math.round((sumaOfCosts / members.length) * currency.rate) }} cz
         </total-costs>
       </details>
     </div>
@@ -282,8 +286,36 @@ export default {
   },
   data () {
     return {
+
+      nameOfTrip: 'trip01',
+      trip: {
+        config: {
+          members:[],
+          currency: '',
+        },
+        costs: [],
+      },
+
+
+      currencies: [
+        {
+          name: 'EUR',
+          rate: 24.72,
+        },
+        {
+          name: 'MAD',
+          rate: 2.40,
+        },
+      ],
+
+      currency: {
+        name: '',
+        rate: 1,
+      },
+
       // members: ['JA','OL','DA','JI','MA','DU'],
-      euCz: 24.72,
+      // euCz: 24.72,
+      euCz: 6.38,
       maxMembers: 5,
 
       nameFileSave: '',
@@ -421,7 +453,12 @@ export default {
     },
     saveCosts() {
       console.log('%cSAVE:','background-color:green;')
-      localStorage.setItem('costs', JSON.stringify(this.costs))
+      // localStorage.setItem('costs', JSON.stringify(this.costs))
+
+      this.trip.config.members = this.members
+      this.trip.costs = this.costs
+
+      localStorage.setItem(this.nameOfTrip, JSON.stringify(this.trip))
     },
     selectToExport() {
       this.$refs.export.select()
@@ -500,12 +537,43 @@ export default {
     }
   },
   created () {
-    
-    if (localStorage.getItem('costs')) {
-      this.costs = JSON.parse(localStorage.getItem('costs'))
-    } else {
-      // this.costs.push({day:0, date: new Date().toJSON(),amount: 40,typeOfCost: "Transport",description: "Cost 1", payer: "HO",debtors: ["DA","JI","EV"]})
+
+    //create object with config in localstorage
+    this.nameOfTrip = 'trip01'
+    this.trip = {
+        config: {
+          members: ['JA','XX'],
+          currencyName: 'MAD',
+        },
+        costs: [],
     }
+
+    if (localStorage.getItem(this.nameOfTrip)) {
+      this.trip = JSON.parse(localStorage.getItem(this.nameOfTrip))
+      
+      this.members = [...this.trip.config.members]
+      
+      this.currency = this.currencies.filter(
+        currency => currency.name === this.trip.config.currencyName
+      )[0]
+
+      console.log('currency:', this.currency.rate)
+
+      this.costs = [...this.trip.costs]
+
+    } else {
+      localStorage.setItem(this.nameOfTrip, JSON.stringify(this.trip))
+
+      this.members = [...this.trip.config.members]
+      
+    }
+
+    // old data structure
+    // if (localStorage.getItem('costs')) {
+    //   this.costs = JSON.parse(localStorage.getItem('costs'))
+    // } else {
+    //   // this.costs.push({day:0, date: new Date().toJSON(),amount: 40,typeOfCost: "Transport",description: "Cost 1", payer: "HO",debtors: ["DA","JI","EV"]})
+    // }
 
     if (localStorage.getItem('showSection')) {
       this.showSection = JSON.parse(localStorage.getItem('showSection'))

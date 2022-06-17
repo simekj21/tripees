@@ -70,7 +70,12 @@
       >
         {{debtor}}
       </td> -->
-      <td class="px-2 text-white text-right">{{ cost.amount }} €</td>
+      <td class="px-2 text-white text-right">
+        {{ cost.amount }} 
+        <span class="font-extralight text-xs">
+          {{ currency.name }}&nbsp;
+        </span>
+      </td>
       <!-- <td class="px-2 text-white">{{ cost.amount }} €</td> -->
       <td>
         <button
@@ -90,6 +95,7 @@ export default {
   name: 'Costs',
   props: {
     costs: Array,
+    currency: Object,
   },
   data () {
     return {

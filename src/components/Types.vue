@@ -24,13 +24,16 @@
         </div>
       </td>
       <td class="pr-2 text-sm text-gray-200 text-right">
-        {{ expense.amount }} €
+        {{ expense.amount }}
+        <span class="font-extralight text-xs">
+          {{ currency.name }}
+        </span>
       </td>
       <td class="pr-2 text-sm text-gray-200 text-right">
-        {{ Math.round(expense.amount * euCz) }} cz
+        {{ Math.round(expense.amount * currency.rate) }} cz
       </td>
       <td class="pr-2 text-sm text-gray-200 text-right">
-        {{ Math.round((expense.amount / members.length) * euCz) }} cz
+        {{ Math.round((expense.amount / members.length) * currency.rate) }} cz
       </td>
       <!-- <td class="pr-2 text-sm text-gray-200 text-right">
         {{ expense.amount }} € &#8718;
@@ -66,6 +69,7 @@ export default {
     typesOfCost: Array,
     lengthOfCosts: Number,
     sumaOfCosts: Number,
+    currency: Object,
   },
   data () {
     return {
