@@ -1,7 +1,21 @@
-# Vue 3 + Vite
+# TRIPEES 
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Keep clear overview of your spent of money in travel time.
 
-## Recommended IDE Setup
+Four Sections:
+>COSTS - list of all costs in time order
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+>REPORTS - overview of spent money for each person
+
+>DEBTS - how many and to who is debt to each person
+
+>TYPES OF COSTS - costs diveded by type 
+
+>SUMA - total suma of all money spent on the trip
+
+![image](https://user-images.githubusercontent.com/43533811/211523947-b4939aea-6868-4653-ac4f-a17ab0f03aab.png)
+
+>
+
+![image](https://user-images.githubusercontent.com/43533811/211524026-a5317bee-4429-4ff4-981a-971325e2551a.png)
+
