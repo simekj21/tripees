@@ -152,7 +152,6 @@ export default {
       // this.cost.description = 'Tr  ' + new Date().toLocaleTimeString()
       // this.cost.typeOfCost = this.cost.typeOfCost.slice(0,4)
 
-
       this.cost.debtors = []
 
       for (let i = 0; i < this.debtors.length; i++) {

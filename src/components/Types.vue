@@ -1,8 +1,5 @@
 <template>
-  <table 
-    class="w-full rounded-md border-collapse text-base text-white bg-slate-600"
-    
-  >
+  <table class="w-full rounded-md border-collapse text-base text-white bg-slate-600">
     <tr
       v-for="(expense, index) in expenses" :key="index"
       class="w-full" 
@@ -42,21 +39,6 @@
       </td> -->
     </tr>
   </table>
-    <!-- <div 
-      class="w-[100px] h-[30px]"
-      :class="getHeightClass"
-    >
-    </div>
-
-    <div
-      v-for="(suma, index) in sumaOfTypes" :key=index
-      class="types-line"
-    >
-      <div :style="'width:' + getProcentStrip(suma) + '%;'" class="types-strip"></div>
-      <div>{{ typesOfCost[index]}}</div>
-      <div>{{ suma }}</div>
-      <div>{{ getProcentStrip(suma, index)}}</div>
-    </div> -->
 </template>
 
 <script>
@@ -78,16 +60,6 @@ export default {
       heightOfDiv: '30px',
       heightClass: 'h-[90px] bg-pink-300',
       actualHeight: 60,
-      // widthOfStripe: 0,
-      // bgColorTypes: [
-      //   'bg-red-900',
-      //   'bg-red-800',
-      //   'bg-red-700',
-      //   'bg-red-600',
-      //   'bg-red-500',
-      //   'bg-red-400',
-      //   'bg-red-300',
-      // ],
       bgColorTypes: [
         'bg-red-300',
         'bg-red-400',
@@ -164,28 +136,7 @@ export default {
       return indexValue
     },
     updateSumaOfTypes () {
-      // this.sumaOfTypes.length = this.typesOfCost.length
-      // this.sumaOfTypes.fill(0)
-
-      // this.costs.forEach(cost => {
-      //   this.sumaOfTypes[this.typesOfCost.indexOf(cost.typeOfCost)] += cost.amount
-      // })
-
       this.expenses = []
-
-      // this.typesOfCost.forEach(type => {
-      //   let filteredCosts = this.costs.filter( cost => cost.typeOfCost === type )
-      //   let amount = filteredCosts.reduce((prev.amount,curr.amount) => prev.amount + curr.amount)
-
-      //   console.log('%c-------->','color: red;font-size:20px;')
-      //   console.log(type)
-      //   console.dir(filteredCosts)
-
-      //   this.expenses.push({
-      //     type: type,
-      //     amount: amount
-      //   })
-      // })
   
       this.typesOfCost.forEach(type => {
         this.expenses.push({
@@ -203,10 +154,6 @@ export default {
       
       this.expenses.sort((a,b) => b.amount - a.amount)
       this.expenses = [...this.expenses.filter( expense => expense.amount > 0)]
-
-      
-
-      // this.sumaOfTypes.sort()
 
     },
     getProcentStrip(suma) {
@@ -226,13 +173,6 @@ export default {
       // console.log('------------------------------------');
 
       this.updateSumaOfTypes()
-      
-      // this.sumaOfTypes = []
-
-      // this.sumaOfTypes.sort((a,b) => {
-        //   return a-b
-      // })
-
     },
   },
   created () {
@@ -244,8 +184,3 @@ export default {
   },
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
- 
-</style>

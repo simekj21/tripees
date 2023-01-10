@@ -104,7 +104,6 @@
 
   <!-- SECTIONS SECTIONS SECTIONS SECTIONS SECTIONS SECTIONS-->
 
-  <!-- <div class="min-h-screen pt-10 flex flex-col items-center bg-green-100"> -->
   <div class="py-5 px-4 flex flex-col gap-y-4 bg-slate-800">
     
     <img class="self-center" width="100" src="./assets/trepees-logo.png">
@@ -271,9 +270,6 @@ var saveData = (function () {
     };
 }());
 
-// var data = { x: 42, s: "hello, world", d: new Date() }
-// var fileName = "my-download.json"
-
 export default {
   components: {
     NewCost,
@@ -309,13 +305,13 @@ export default {
       ],
 
       currency: {
-        name: '',
-        rate: 1,
+        name: 'EUR',
+        rate: 25,
       },
 
       // members: ['JA','OL','DA','JI','MA','DU'],
       // euCz: 24.72,
-      euCz: 6.38,
+      euCz: 25,
       maxMembers: 5,
 
       nameFileSave: '',
@@ -331,7 +327,7 @@ export default {
       },
       showSectionStorage: {},
 
-      members: ['HO','DA','JI','EV'],
+      members: ['HO','DA','MA','RA'],
       typesOfCost: 
         ['Transport','Restaurant','Food','Pub','Hotel','Attraction','Other'],
       
@@ -344,18 +340,6 @@ export default {
         currency: 'EU',
         debtors: [],
       },
-
-      // cost: {
-      //   payer: '',
-      //   description: '',
-      //   date: '',
-      //   day: '',
-      //   typeOfCost: this.typesOfCost[0],
-      //   amount: 40,
-      //   currency: 'CZK',
-      //   debtors: [],
-      // },
-
       costs: [],
       importedCosts: [],
       
@@ -366,7 +350,6 @@ export default {
       
       amount: 0,
       amountPerOne: 0,
-
       lengthOfCosts: 0,
     }
   },
@@ -380,7 +363,6 @@ export default {
 
       return suma
     }
-
   },
   watch: {
     lengthOfCosts: function () {
@@ -390,12 +372,21 @@ export default {
   },
   methods: {
     openAdminArea() {
-      this.showAdminArea = !this.showAdminArea
+      // this.showAdminArea = !this.showAdminArea
+
+      if (this.showAdminArea) {
+        this.showAdminArea = false
+      } else {
+        this.showAdminArea = true
+      }
+      // this.showAdminArea = true
     },
     saveConfig(editedMembers) {
-      console.log('Save config:', editedMembers)
-
+      this.showAdminArea = false
+      
       this.members = [...editedMembers]
+      this.saveCosts()
+      console.log('Save config:', this.members)
     },
     cancelConfig(shouldCancel) {
       if (shouldCancel) {
@@ -404,11 +395,7 @@ export default {
     },
     toggleSection(section) {
       this.showSectionStorage[section] = this.$refs[section].open
-
       localStorage.setItem('showSection', JSON.stringify(this.showSectionStorage))
-
-      // console.log('Toggle section:', this.showSectionStorage)
-      // console.log('Toggle section:',section, '>>>', this.$refs[section].open)
     },
     loadCosts(event) {
       console.log('%cLOAD:','background-color:red;')
@@ -418,13 +405,9 @@ export default {
       var fileread = new FileReader()
       
       fileread.onload = function(e) {
-        // var content = e.target.result
         var fileToJSON = JSON.parse(e.target.result) 
         console.log('>>>>', fileToJSON)
-
-        // this.costs = []
         this.costs = [...fileToJSON]
-        // this.saveCosts()
         console.log('LOADED COSTS:', this.costs)
         localStorage.setItem('costs', JSON.stringify(this.costs))
       }
@@ -435,7 +418,6 @@ export default {
         console.log('%cLOAD ENDED','background-color:orange')
         this.costs = JSON.parse(localStorage.getItem('costs'))
       })
-
     },
     saveCostsFile() {
       console.log('%cSAVE TO FILE:','background-color:pink;')
@@ -445,15 +427,9 @@ export default {
       this.nameFileSave += '.json'
 
       saveData(this.costs, this.nameFileSave)
-
-      // var blob = new Blob(["Welcome to Websparrow.org."],
-      //     { type: "text/plain;charset=utf-8" })
-      // saveAs(blob, "static.txt")
-    
     },
     saveCosts() {
       console.log('%cSAVE:','background-color:green;')
-      // localStorage.setItem('costs', JSON.stringify(this.costs))
 
       this.trip.config.members = this.members
       this.trip.costs = this.costs
@@ -486,7 +462,6 @@ export default {
       this.saveCosts()
 
       this.shouldOpenImport = false
-
     },
     exportCosts() {
       if (this.shouldOpenExport) {
@@ -498,14 +473,23 @@ export default {
     },
     clearCosts() {
       if (confirm('Are you sure to clear All?')) {
-        localStorage.clear('costs')
+        localStorage.clear()
         this.costs = []
+
+        this.nameOfTrip = 'trip01'
+        this.trip = {
+            config: {
+              members: ['JA','DA','MA','RA'],
+              currencyName: 'EUR',
+            },
+            costs: [],
+        }
+
+        localStorage.setItem(this.nameOfTrip, JSON.stringify(this.trip))
       }
     },
     addCost(newCost) {
-      // console.log('>>>> New cost:', newCost)
-
-      // this.costs.push({...newCost})
+      console.log('>>>> New cost:', newCost)
       if (newCost.description === '') {
         newCost.description = 'Cost ' + (this.costs.length + 1)
       }
@@ -513,37 +497,18 @@ export default {
       this.costs.push({...newCost})
 
       this.saveCosts()
-
-      // localStorage.setItem('Costs', JSON.stringify(this.costs))
-
-      // console.dir(this.costs)
-
-
-      // const copyNewCost = {...newCost}
-      // this.costs.push(copyNewCost)
-
-      // console.log('New cost:', copyNewCost)
-
-      // this.lengthOfCosts = this.costs.length
     },
     updateCosts(index) {
       this.costs.splice(index, 1)
-
       this.saveCosts()
-      
-      // localStorage.setItem('Costs', JSON.stringify(this.costs))
-
-      // this.lengthOfCosts = this.costs.length
     }
   },
   created () {
-
-    //create object with config in localstorage
     this.nameOfTrip = 'trip01'
     this.trip = {
         config: {
-          members: ['JA','XX'],
-          currencyName: 'MAD',
+          members: ['JA','DA','MA','RA'],
+          currencyName: 'EUR',
         },
         costs: [],
     }
@@ -563,14 +528,6 @@ export default {
     console.log('currency:', this.currency.rate)
 
     this.costs = [...this.trip.costs]
-  
-
-    // old data structure
-    // if (localStorage.getItem('costs')) {
-    //   this.costs = JSON.parse(localStorage.getItem('costs'))
-    // } else {
-    //   // this.costs.push({day:0, date: new Date().toJSON(),amount: 40,typeOfCost: "Transport",description: "Cost 1", payer: "HO",debtors: ["DA","JI","EV"]})
-    // }
 
     if (localStorage.getItem('showSection')) {
       this.showSection = JSON.parse(localStorage.getItem('showSection'))
@@ -635,39 +592,6 @@ export default {
     // }
   },
   beforeDestroy () {
-    // localStorage.setItem('costs', this.costs)
-
-    // let payments = []
-    // let participiants = ['JA','JI','DA','OL']
-
-    // payments.push({amount: 40,type: "Transport",payer: "JA",participiants: "DA,JI,OL"})
-    // payments.push({amount: 30,type: "Transport",payer: "JA",participiants: "DA,JI"})
-    // payments.push({amount: 20,type: "Transport",payer: "JA",participiants: "DA,JI"})
-    // payments.push({amount: 60,type: "Transport",payer: "DA",participiants: "OL,JI"})
-
-    // mrizka = {}
-    // participiants.forEach( pr => {
-    //   participiants.forEach( pr2 => {
-    //       mrizka[pr + pr2] = 0
-    //   })
-    // })
-
-    // payments[0].participiants.split(',').forEach(user => {
-    //   let share = payments[0].amount / payments[0].participiants.split(',').length 
-    //   mrizka[user + payments[0].payer] += share
-    // })
-
-    // payments.forEach( payment => {
-    //     payment.participiants.split(',').forEach(user => {
-    //     let share = payment.amount / payment.participiants.split(',').length 
-    //     mrizka[user + payment.payer] += share
-    //   })
-    // })
-
-    // for (const key in mrizka) {
-    //   console.log(`${key}: ${mrizka[key]}`);
-    // }
-
   },
 }
 </script>

@@ -1,32 +1,4 @@
 <template>
-
-  <!-- <div class="p-1 flex flex-col  
-    rounded-md text-md text-white font-bold bg-slate-600">
-    <div
-      v-for="(cost, index) in costs" :key="index"
-      class="flex flex-row justify-between"
-    >
-      <div class="">{{cost.payer}}</div>
-      <div class="font-extralight">
-        {{cost.typeOfCost.slice(0,4)}}
-      </div>
-      <div class="px-2 ">{{cost.description}}</div>
-      <div 
-        v-for="(debtor, index) in cost.debtors" :key="index"
-        class="text-gray-300 font-normal"
-      >
-        {{debtor}}
-      </div>
-      <div class="px-2 text-white">{{cost.amount}} €</div>
-      <button
-        class="font-bold text-red-600"
-        @click="removeCost(index)"
-      >
-        X
-      </button>
-    </div>
-  </div> -->
-
   <table 
     class="w-full bg-green-100 rounded-md border-collapse text-sm text-white font-bold 
       bg-slate-600">
@@ -108,20 +80,6 @@ export default {
       this.$emit('update-costs', index)
     },
     getDay(index) {
-      // if (index === 0) { 
-      //   this.actualDay = this.costs[index].day
-
-      //   return this.dayNames[this.costs[index].day].slice(0,3) 
-      // }
-
-      // if (this.costs[index].day === this.actualDay) {
-      //   return ''
-      // } else {
-      //   this.actualDay = this.costs[index].day
-
-      //   return this.dayNames[this.costs[index].day].slice(0,3)
-      // }
-
       let day = this.dayNames[this.costs[index].day].slice(0,3)
 
       if (index > 0 && this.costs[index].day === this.costs[index-1].day) {

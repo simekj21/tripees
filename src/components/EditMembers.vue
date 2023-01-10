@@ -1,5 +1,4 @@
 <template>
-  
   <div class="flex flex-row gap-x-4">
     <div 
       v-for="(member, index) in editedMembers" :key="index"
@@ -10,10 +9,10 @@
     >
       <div class="self-center">{{ member }}</div>
     </div>
-
+    
+    <!-- v-show="showInput" -->
     <input
       ref="member"
-      v-if="showInput"
       class="h-10 w-10 rounded-full bg-slate-200 text-center uppercase"
       maxlength="2"
       type="text"
@@ -46,19 +45,7 @@
         +
       </div>
     </div>
-    
-    <!-- <div
-      v-if="showInput"
-      class="h-10 w-10 cursor-pointer rounded-full  text-center
-      flex flex-row justify-center items-center"
-      @click="showInput=false"
-    >
-      <div
-        class="h-6 w-6 text-white text-4xl leading-4"
-      >
-        x
-      </div>
-    </div> -->
+   
   </div>  
   
   <div class="flex flex-grow gap-x-4">
@@ -88,7 +75,7 @@ export default {
   },
   data () {
     return {
-      showInput: false,
+      showInput: true,
       newMember: '',
       showAddButton: true,
       editedMembers: [...this.members]
@@ -97,12 +84,9 @@ export default {
   },
   methods: {
     addMember() {
-      
-      if (!this.showInput) {
-        this.showInput = true
-      }
-      
-      if (this.showInput) {
+      this.showInput = true
+
+        console.log("REFFF:", this.$refs.member)
 
         this.newMember = this.$refs.member.value.toUpperCase()
         
@@ -117,46 +101,50 @@ export default {
 
           if (this.editedMembers.indexOf(this.newMember) === -1) {
             this.editedMembers.push(this.newMember)
+            this.$refs.member.value = ''
+            console.log('New pushed member:',this.editedMembers)
 
             if (this.editedMembers.length >= this.maxMembers) {
              this.showAddButton = false
             }
 
             this.newMember = ''
-            this.showInput = false
+            // this.showInput = false
+            this.showInput = true
 
             } else {
-              alert('User already exist!')
+                alert('User already exist!')
 
-              return
-          }
+                return
+            }
 
         } else {
           return
         }
 
-        
-
-      }
+      // }
     },
     deleteMember(index) {
-
       if (index === 0) {
-        alert('You can delete yourself!')
+        alert('You can not delete yourself!')
 
         return
       }
 
-      if (!this.showInput) {
+      // if (!this.showInput) {
         if (confirm('Delete member YES/NO?')) {
           this.editedMembers.splice(index, 1)
 
           console.log('Members:', this.editedMembers)
         }
-      }
+      // }
     },
     saveConfig() {
-      this.$emit('save-config', this.editedMembers)
+      console.log('Emit members>>', this.editedMembers)
+
+      if (confirm('Save editet members YES/NO?')) {
+        this.$emit('save-config', this.editedMembers)
+      }
     },
     cancelConfig() {
       this.$emit('cancel-config', true)
