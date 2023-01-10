@@ -13,6 +13,12 @@ Four Sections:
 
 >SUMA - total suma of all money spent on the trip
 
+
+![image](https://user-images.githubusercontent.com/43533811/211524273-ae123362-526c-4eef-b77f-05886c895fd5.png)
+
+>
+
+
 ![image](https://user-images.githubusercontent.com/43533811/211523947-b4939aea-6868-4653-ac4f-a17ab0f03aab.png)
 
 >
