@@ -2,6 +2,8 @@
 
 Keep clear overview of your spent of money in travel time.
 
+DEMO: tripees.fotopulse.cz
+
 Four Sections:
 >COSTS - list of all costs in time order
 
